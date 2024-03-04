@@ -5,7 +5,17 @@ import (
 	"golang/mvc/utils"
 )
 
-func GetUsers(userId int64) (*domain.User,
+type userService struct{}
+
+var (
+	UserService userService
+)
+
+func (u *userService) GetUsers(userId int64) (*domain.User,
 	*utils.ApplicationError) {
-	return domain.GetUser(userId)
+	user, err := domain.UserDao.GetUser(userId)
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
 }
